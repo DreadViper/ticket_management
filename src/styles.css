@@ -1,0 +1,517 @@
+:root {
+  font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+  color: #102a43;
+  background:
+    radial-gradient(circle at top left, rgba(17, 138, 178, 0.2), transparent 28%),
+    radial-gradient(circle at bottom right, rgba(255, 125, 79, 0.18), transparent 30%),
+    linear-gradient(180deg, #f4f7fb, #ebf1f7);
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button,
+select {
+  cursor: pointer;
+}
+
+h1,
+h2,
+h3,
+h4,
+p {
+  margin-top: 0;
+}
+
+.app-shell {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 260px 1fr;
+}
+
+.sidebar {
+  padding: 28px 20px;
+  background: #0f2740;
+  color: #f0f4f8;
+  display: grid;
+  align-content: start;
+  gap: 28px;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.brand-block {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.brand-block p {
+  margin-bottom: 0;
+  color: rgba(240, 244, 248, 0.72);
+}
+
+.brand-mark {
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, #ff7d4f, #118ab2);
+  font-weight: 800;
+}
+
+.nav-list {
+  display: grid;
+  gap: 10px;
+}
+
+.nav-button {
+  text-align: left;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.04);
+  color: #f0f4f8;
+  border-radius: 16px;
+  padding: 14px 16px;
+}
+
+.nav-button.active {
+  background: #f0f4f8;
+  color: #0f2740;
+}
+
+.workspace {
+  padding: 24px;
+  display: grid;
+  gap: 20px;
+}
+
+.header-bar,
+.panel,
+.stat-card,
+.detail-card,
+.comment-card,
+.ticket-list-item,
+.team-card,
+.user-row,
+.read-only-note {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(16, 42, 67, 0.08);
+  box-shadow: 0 20px 45px rgba(16, 42, 67, 0.08);
+}
+
+.header-bar,
+.panel {
+  border-radius: 28px;
+  padding: 24px;
+}
+
+.header-bar {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+}
+
+.header-main {
+  display: grid;
+  gap: 10px;
+}
+
+.header-user-card {
+  min-width: 280px;
+  display: grid;
+  gap: 8px;
+}
+
+.session-card {
+  border: 1px solid #d9e2ec;
+  border-radius: 16px;
+  padding: 14px 16px;
+  background: white;
+  display: grid;
+  gap: 4px;
+}
+
+.header-permissions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 0.78rem;
+  color: #ff7d4f;
+  font-weight: 700;
+}
+
+.page-grid {
+  display: grid;
+}
+
+.panel-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: start;
+  margin-bottom: 20px;
+}
+
+.panel-heading p,
+.subtle-text,
+.empty-state,
+.team-card-header span,
+.team-member-row span,
+.user-row p,
+.comment-author span {
+  color: #627d98;
+}
+
+.stats-grid,
+.detail-grid,
+.team-grid,
+.ticket-form-grid,
+.admin-form {
+  display: grid;
+  gap: 16px;
+}
+
+.stats-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-bottom: 20px;
+}
+
+.stat-card {
+  border-radius: 20px;
+  padding: 18px;
+  display: grid;
+  gap: 6px;
+}
+
+.stat-card strong {
+  font-size: 1.9rem;
+}
+
+.ticket-compact-list,
+.comment-list,
+.team-member-list,
+.user-table,
+.ticket-form {
+  display: grid;
+  gap: 14px;
+}
+
+.ticket-list-item {
+  width: 100%;
+  border-radius: 20px;
+  padding: 18px 20px;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+  text-align: left;
+}
+
+.ticket-list-item h3 {
+  margin-bottom: 4px;
+}
+
+.ticket-list-item p {
+  margin-bottom: 0;
+  color: #486581;
+}
+
+.ticket-list-meta,
+.tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.detail-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-bottom: 20px;
+}
+
+.detail-card,
+.team-card {
+  border-radius: 24px;
+  padding: 20px;
+}
+
+.detail-card label,
+.header-user-card label,
+.ticket-form label,
+.user-row label {
+  display: grid;
+  gap: 8px;
+  font-weight: 700;
+}
+
+.comment-form {
+  display: grid;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.comment-card {
+  border-radius: 18px;
+  padding: 16px;
+}
+
+.comment-author,
+.team-card-header,
+.team-member-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.team-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.team-member-row {
+  padding: 12px 0;
+  border-bottom: 1px solid #e6edf5;
+}
+
+.team-member-row:last-child {
+  border-bottom: 0;
+}
+
+.read-only-note {
+  border-radius: 18px;
+  padding: 16px;
+  display: grid;
+  gap: 6px;
+}
+
+.read-only-note span {
+  color: #627d98;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.78rem;
+}
+
+.admin-form {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  margin-bottom: 20px;
+}
+
+.user-row {
+  border-radius: 20px;
+  padding: 18px;
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr;
+  gap: 16px;
+  align-items: center;
+}
+
+.tag,
+.restriction-badge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 7px 12px;
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+.priority-low {
+  background: #e3fcef;
+  color: #147d64;
+}
+
+.priority-medium {
+  background: #fff4d6;
+  color: #8d6e00;
+}
+
+.priority-high {
+  background: #ffe3c7;
+  color: #c05621;
+}
+
+.priority-critical {
+  background: #ffe3e3;
+  color: #c53030;
+}
+
+.status-tag {
+  background: #d9e2ec;
+  color: #334e68;
+}
+
+.restriction-badge {
+  background: #ffe8cc;
+  color: #b44d12;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  border: 1px solid #d9e2ec;
+  border-radius: 16px;
+  background: white;
+  padding: 14px 16px;
+  color: #102a43;
+}
+
+input:disabled,
+select:disabled,
+textarea:disabled {
+  background: #f4f7fb;
+  color: #7b8794;
+}
+
+textarea {
+  resize: vertical;
+}
+
+button {
+  border: 0;
+  border-radius: 16px;
+  padding: 14px 18px;
+  background: #0b6e4f;
+  color: white;
+  transition: transform 120ms ease, opacity 120ms ease;
+}
+
+button:hover {
+  transform: translateY(-1px);
+  opacity: 0.95;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+  transform: none;
+}
+
+.login-shell {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.login-card {
+  width: min(100%, 460px);
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(16, 42, 67, 0.08);
+  box-shadow: 0 20px 45px rgba(16, 42, 67, 0.08);
+  border-radius: 28px;
+  padding: 28px;
+}
+
+.login-copy {
+  color: #627d98;
+}
+
+.login-form {
+  display: grid;
+  gap: 14px;
+  margin-top: 20px;
+}
+
+.form-error {
+  color: #c53030;
+  font-weight: 700;
+  margin-top: 14px;
+}
+
+.banner-error {
+  margin-bottom: 0;
+  color: #b42318;
+  background: #fef3f2;
+  border: 1px solid #fecdca;
+  border-radius: 14px;
+  padding: 12px 14px;
+}
+
+.login-hint {
+  margin-top: 18px;
+  display: grid;
+  gap: 4px;
+  padding: 16px;
+  border-radius: 18px;
+  background: #f4f7fb;
+  color: #486581;
+}
+
+@media (max-width: 1080px) {
+  .app-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    gap: 16px;
+  }
+
+  .nav-list {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  .detail-grid,
+  .team-grid,
+  .admin-form,
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .user-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .workspace {
+    padding: 16px;
+  }
+
+  .header-bar,
+  .panel,
+  .detail-card,
+  .team-card,
+  .ticket-list-item,
+  .user-row {
+    padding: 18px;
+  }
+
+  .header-bar,
+  .panel-heading,
+  .ticket-list-item,
+  .ticket-list-meta,
+  .comment-author,
+  .team-card-header,
+  .team-member-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .nav-list {
+    grid-template-columns: 1fr;
+  }
+}
