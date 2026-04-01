@@ -32,8 +32,8 @@ export default function LoginPage({
         {loginError && <p className="form-error">{loginError}</p>}
 
         <div className="login-hint">
-          <strong>Demo Admin Login</strong>
-          <span>`riya.admin@ticketflow.dev` / `Admin@123`</span>
+          <strong>Ask your admin</strong>
+          <span>Use the credentials provided by your administrator.</span>
         </div>
       </section>
     </main>
