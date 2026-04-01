@@ -8,8 +8,13 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const dataDir = path.join(__dirname, "data");
 const dataFile = path.join(dataDir, "app-data.enc");
-const storageSecret =
-  process.env.TICKETFLOW_SECRET ?? "ticketflow-dev-secret-change-me";
+const storageSecret = process.env.TICKETFLOW_SECRET;
+
+if (!storageSecret) {
+  throw new Error(
+    "TICKETFLOW_SECRET environment variable is required for encrypted storage.",
+  );
+}
 
 function deriveKey(secret) {
   return crypto.createHash("sha256").update(secret).digest();
@@ -73,10 +78,26 @@ function decryptState(encryptedText) {
   return JSON.parse(decrypted.toString("utf8"));
 }
 
+function getSeedPassword(user) {
+  if (user.passwordEnvVar) {
+    return process.env[user.passwordEnvVar];
+  }
+
+  return undefined;
+}
+
 function createSeedState() {
   return {
     users: seedUsers.map((user) => {
-      const { password, ...rest } = user;
+      const password = getSeedPassword(user) ?? crypto.randomBytes(16).toString("base64url");
+
+      if (!process.env[user.passwordEnvVar]) {
+        console.warn(
+          `No env var found for seed user ${user.email}; generated a temporary password.`,
+        );
+      }
+
+      const { passwordEnvVar, ...rest } = user;
       return {
         ...rest,
         ...hashPassword(password),
