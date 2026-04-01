@@ -1,4 +1,7 @@
+import fs from "node:fs";
 import http from "node:http";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { getPermissions } from "../src/auth/rbac.js";
 import { loadState, saveState, sanitizeUser, sanitizeUsers, verifyPassword, createStoredUser } from "./storage.js";
 import { LOCKED_ADMIN_USER_ID } from "./seed.js";
@@ -6,6 +9,63 @@ import { LOCKED_ADMIN_USER_ID } from "./seed.js";
 const port = Number(process.env.PORT ?? 3001);
 const engineeringTeams = new Set(["FE Dev", "BE Dev", "DevOps"]);
 const allowedTeams = new Set(["QA", "BA", "FE Dev", "BE Dev", "DevOps"]);
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const distDir = path.join(__dirname, "..", "dist");
+
+function getMimeType(filePath) {
+  const ext = path.extname(filePath).toLowerCase();
+
+  return {
+    ".html": "text/html; charset=UTF-8",
+    ".js": "text/javascript; charset=UTF-8",
+    ".css": "text/css; charset=UTF-8",
+    ".json": "application/json; charset=UTF-8",
+    ".png": "image/png",
+    ".jpg": "image/jpeg",
+    ".jpeg": "image/jpeg",
+    ".svg": "image/svg+xml",
+    ".ico": "image/x-icon",
+    ".webp": "image/webp",
+    ".woff": "font/woff",
+    ".woff2": "font/woff2",
+  }[ext] ?? "application/octet-stream";
+}
+
+function sendFile(res, filePath) {
+  const mimeType = getMimeType(filePath);
+  const content = fs.readFileSync(filePath);
+
+  res.writeHead(200, {
+    "Content-Type": mimeType,
+  });
+  res.end(content);
+}
+
+function serveStaticFile(res, pathname) {
+  const safePath = path.normalize(path.join(distDir, pathname.replace(/^\//, "")));
+
+  if (!safePath.startsWith(distDir)) {
+    sendError(res, 403, "Forbidden");
+    return;
+  }
+
+  let filePath = safePath;
+
+  if (pathname === "/" || pathname === "" || !path.extname(filePath)) {
+    filePath = path.join(distDir, "index.html");
+  }
+
+  if (!fs.existsSync(filePath) || !fs.statSync(filePath).isFile()) {
+    filePath = path.join(distDir, "index.html");
+  }
+
+  if (!fs.existsSync(filePath) || !fs.statSync(filePath).isFile()) {
+    sendError(res, 500, "Static assets not found.");
+    return;
+  }
+
+  sendFile(res, filePath);
+}
 
 function sendJson(res, statusCode, payload) {
   res.writeHead(statusCode, {
@@ -64,6 +124,11 @@ function requireActor(state, actingUserId) {
 
 const server = http.createServer(async (req, res) => {
   const url = new URL(req.url, `http://${req.headers.host}`);
+
+  if (!url.pathname.startsWith("/api")) {
+    serveStaticFile(res, url.pathname);
+    return;
+  }
 
   if (req.method === "GET" && url.pathname === "/api/health") {
     sendJson(res, 200, { ok: true });
